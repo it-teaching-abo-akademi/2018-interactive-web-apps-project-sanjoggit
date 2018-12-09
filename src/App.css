@@ -1,10 +1,32 @@
-*{
-    padding: 0 !important;
-}
 
-.navbar{
-    height:60px;
-}
+
+
 .navbar-brand{
     color: white !important;
+}
+
+.add-btn{
+    margin: 20px 0 20px 0;
+}
+
+.portfolio-name{
+    font-weight: bold;
+}
+
+.portfolio-container{
+    border: 1px solid black;
+    padding: 20px;
+}
+
+.portfolio-container span{
+    display: flex;
+    justify-content: space-around;
+}
+
+table{
+    margin-top: 20px;
+}
+
+form div{
+    margin-bottom: 10px;;
 }
