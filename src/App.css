@@ -16,11 +16,18 @@
 .portfolio-container{
     border: 1px solid black;
     padding: 20px;
+    margin-bottom: 20px;
 }
 
-.portfolio-container span{
+.top-controller{
     display: flex;
     justify-content: space-around;
+    margin-bottom: 20px;
+}
+.bottom-controller{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 table{

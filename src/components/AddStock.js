@@ -9,7 +9,7 @@ import {
     ModalFooter
 } from 'reactstrap';
 
-class AddPortfolio extends Component {
+class AddStock extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,18 +17,18 @@ class AddPortfolio extends Component {
         }
       }
     
-      toggle = ()=> {
+      toggle =()=> {
         this.setState({
           modal: !this.state.modal
         });
       }
     render() {        
         const closeBtn = <button className="close" onClick={this.toggle}>&times;</button>;
-        const {portfolioName, modal, handleChange, createPortfolio, toggle} = this.props;
+        const {stockName, stockAmount, modal, handleChange, toggle, addStock, id} = this.props;
         return (
             <Row>
                 <Col xs="12">
-                    <Button color="primary" className="add-btn" onClick={this.toggle}>Add Portfolio</Button>
+                    <Button color="primary" className="add-btn" onClick={this.toggle}>Add Stock</Button>
                     <Modal
                         isOpen={this.state.modal}
                         toggle={this.toggle}
@@ -37,20 +37,32 @@ class AddPortfolio extends Component {
                         <ModalBody>
                             <form>
                                 <div>
-                                    <label><h6>Portfolio Name</h6></label>
+                                    <label><h6>Stock Name</h6></label>
                                     <input 
                                         type="text" 
                                         className="form-control" 
-                                        placeholder="Portfolio Name" 
-                                        name="portfolioName"
-                                        value={portfolioName}
+                                        placeholder="Stock Name"
+                                        name="stockName"
+                                        style={{textTransform: 'uppercase'}}
+                                        value={stockName}
+                                        onChange={handleChange}
+                                        />
+                                </div>
+                                <div>
+                                    <label><h6>Stock Amount</h6></label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        placeholder="0" 
+                                        name="stockAmount"
+                                        value={stockAmount}
                                         onChange={handleChange}
                                         />
                                 </div>
                             </form>
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" onClick={createPortfolio}>Create</Button>{' '}
+                            <Button color="primary" onClick={()=>addStock(id)}>Create</Button>{' '}
                             <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                         </ModalFooter>
                     </Modal>
@@ -60,4 +72,4 @@ class AddPortfolio extends Component {
     }
 }
 
-export default AddPortfolio;
+export default AddStock;
