@@ -24,7 +24,7 @@ class AddPortfolio extends Component {
       }
     render() {        
         const closeBtn = <button className="close" onClick={this.toggle}>&times;</button>;
-        const {portfolioName, modal, handleChange, createPortfolio, toggle} = this.props;
+        const {portfolioName, handleChange, createPortfolio} = this.props;
         return (
             <Row>
                 <Col xs="12">

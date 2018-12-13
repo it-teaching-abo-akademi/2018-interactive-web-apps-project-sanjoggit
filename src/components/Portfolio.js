@@ -1,7 +1,8 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {Button, Row, Col, Table} from 'reactstrap'
 import AddPortfolio from './AddPortfolio';
 import AddStock from './AddStock';
+import axios from 'axios';
 
 class Portfolio extends Component {
     constructor(props){
@@ -11,9 +12,13 @@ class Portfolio extends Component {
             stockName: '',
             stockAmount: '',
             modal: false,
-            portfolio: []
+            portfolio: [],
+            unitValue: null,
+            totalValue: null
         }
     }
+    
+
     toggle = () =>{
         this.setState({
             modal: !this.state.modal
@@ -48,8 +53,33 @@ class Portfolio extends Component {
             stockName: '',
             stockAmount: ''
         })
-        this.state.portfolio[id].stocks.push(stock);
-     }
+        // this.state.portfolio[id].stocks.push(stock);
+        axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${stock.stockName}&interval=1min&apikey=EVNDD17OHUNAZIMD&outputsize=compact`)
+        .then(res=>{
+            const data = res.data['Time Series (1min)'];
+            const values = Object.values(data)[0];
+            const unitValue = values['1. open'];
+            const totalValue = unitValue * stock.stockAmount
+            this.state.portfolio[id].stocks.push({
+                stockName: stock.stockName.toUpperCase(),
+                stockAmount: stock.stockAmount,
+                unitValue: unitValue,
+                totalValue: totalValue,
+            });
+            this.setState({
+                modal: false
+            })
+        })
+        .catch(e=>console.log(e))
+    }
+
+    removePortfolio = (i)=>{
+        console.log('********', this.state.portfolio);
+        this.state.portfolio.splice(i, 1)
+        this.setState({
+            modal: true
+        })
+    }
     render() {
         console.log(this.state.portfolio);
         const portfolio = this.state.portfolio.map((item, i)=>(
@@ -58,7 +88,7 @@ class Portfolio extends Component {
                             <span className="top-controller">
                                 <p className="portfolio-name">{item.portfolioName}</p>
                                 <Button color="primary">Show in Dollars</Button>
-                                <Button color="danger">X</Button>
+                                <Button color="danger" onClick={()=>this.removePortfolio(i)}>X</Button>
                             </span>
                             <Table bordered>
                                 <thead>
@@ -75,21 +105,20 @@ class Portfolio extends Component {
                                     <tr>
                                         <td>{item.stockName}</td>
                                         <td>{item.stockAmount}</td>
-                                        <td>4.866 EUR</td>
-                                        <td>97.316 EUR</td>
+                                        <td>{item.unitValue}</td>
+                                        <td>{item.totalValue}</td>
                                         <td><input type="checkbox"/></td>
                                     </tr>
                                 </tbody>
                             ))}
                             
                             </Table> 
-                            <p>Total: 330.241 EUR</p>
+                            <p>total value</p>
                             <span className="bottom-controller">
                                 <AddStock 
                                     color="primary"
                                     stockName= {this.state.stockName}
                                     stockAmount= {this.state.stockAmount}
-                                    modal={this.state.modal}
                                     handleChange={this.handleChange}
                                     createPortfolio={this.createPortfolio}
                                     toggle={this.toggle}
@@ -113,7 +142,6 @@ class Portfolio extends Component {
                     portfolioName= {this.state.portfolioName}
                     stockName= {this.state.stockName}
                     stockAmount= {this.state.stockAmount}
-                    modal={this.state.modal}
                     handleChange={this.handleChange}
                     createPortfolio={this.createPortfolio}
                     toggle={this.toggle}

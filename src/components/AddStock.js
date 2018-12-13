@@ -24,7 +24,7 @@ class AddStock extends Component {
       }
     render() {        
         const closeBtn = <button className="close" onClick={this.toggle}>&times;</button>;
-        const {stockName, stockAmount, modal, handleChange, toggle, addStock, id} = this.props;
+        const {stockName, stockAmount, handleChange, addStock, id} = this.props;
         return (
             <Row>
                 <Col xs="12">
