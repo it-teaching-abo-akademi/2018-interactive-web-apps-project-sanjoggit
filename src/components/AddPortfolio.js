@@ -23,17 +23,17 @@ class AddPortfolio extends Component {
         });
       }
     render() {        
-        const closeBtn = <button className="close" onClick={this.toggle}>&times;</button>;
-        const {portfolioName, handleChange, createPortfolio} = this.props;
+        const closeBtn = <button className="close" onClick={this.props.toggle}>&times;</button>;
+        const {portfolioName, handleChange, createPortfolio, modal, toggle} = this.props;
         return (
             <Row>
                 <Col xs="12">
-                    <Button color="primary" className="add-btn" onClick={this.toggle}>Add Portfolio</Button>
+                    <Button color="primary" className="add-btn" onClick={toggle}>Add Portfolio</Button>
                     <Modal
-                        isOpen={this.state.modal}
-                        toggle={this.toggle}
+                        isOpen={modal}
+                        toggle={toggle}
                         className={this.props.className}>
-                        <ModalHeader toggle={this.toggle} close={closeBtn}>Create new portfolio</ModalHeader>
+                        <ModalHeader toggle={toggle} close={closeBtn}>Create new portfolio</ModalHeader>
                         <ModalBody>
                             <form>
                                 <div>
@@ -51,7 +51,7 @@ class AddPortfolio extends Component {
                         </ModalBody>
                         <ModalFooter>
                             <Button color="primary" onClick={createPortfolio}>Create</Button>{' '}
-                            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                            <Button color="secondary" onClick={toggle}>Close</Button>
                         </ModalFooter>
                     </Modal>
                 </Col>

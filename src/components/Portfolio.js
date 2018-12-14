@@ -14,7 +14,7 @@ class Portfolio extends Component {
             modal: false,
             portfolio: [],
             unitValue: null,
-            totalValue: null
+            totalValue: null,
         }
     }
     
@@ -63,8 +63,8 @@ class Portfolio extends Component {
             this.state.portfolio[id].stocks.push({
                 stockName: stock.stockName.toUpperCase(),
                 stockAmount: stock.stockAmount,
-                unitValue: unitValue,
-                totalValue: totalValue,
+                unitValue: unitValue+'EUR',
+                totalValue: totalValue+'EUR',
             });
             this.setState({
                 modal: false
@@ -74,14 +74,12 @@ class Portfolio extends Component {
     }
 
     removePortfolio = (i)=>{
-        console.log('********', this.state.portfolio);
-        this.state.portfolio.splice(i, 1)
+        this.state.portfolio.splice(i, 1);
         this.setState({
-            modal: true
+            modal:true
         })
     }
     render() {
-        console.log(this.state.portfolio);
         const portfolio = this.state.portfolio.map((item, i)=>(
                     <Col xs="12" lg="6" key={i}>
                         <div className="portfolio-container">
@@ -107,7 +105,10 @@ class Portfolio extends Component {
                                         <td>{item.stockAmount}</td>
                                         <td>{item.unitValue}</td>
                                         <td>{item.totalValue}</td>
-                                        <td><input type="checkbox"/></td>
+                                        <td>
+                                            <input 
+                                                type="checkbox" />
+                                        </td>
                                     </tr>
                                 </tbody>
                             ))}
@@ -129,7 +130,7 @@ class Portfolio extends Component {
                                     <Button color="info">Perf Graph</Button>
                                 </div>
                                 <div>
-                                    <Button color="danger">Remove Selected</Button>   
+                                    <Button color="danger" onClick={this.removeStock}>Remove Selected</Button>   
                                 </div>
                             </span>
                         </div>
@@ -145,6 +146,7 @@ class Portfolio extends Component {
                     handleChange={this.handleChange}
                     createPortfolio={this.createPortfolio}
                     toggle={this.toggle}
+                    modal={this.state.modal}
                 />                
                 <Row>{portfolio}</Row>
             </div>
