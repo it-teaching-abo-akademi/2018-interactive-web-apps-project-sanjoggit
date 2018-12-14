@@ -15,7 +15,19 @@ class Portfolio extends Component {
             portfolio: [],
             unitValue: null,
             totalValue: null,
+            USD_EUR: {}
         }
+    }
+    UNSAFE_componentWillMount(){
+        axios.get(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=EUR&apikey=EVNDD17OHUNAZIMD`)
+        .then(res=>{
+            const exchangeObj =res.data['Realtime Currency Exchange Rate'];
+            const currencyObj = exchangeObj['5. Exchange Rate'];
+            this.setState({
+                USD_EUR: currencyObj
+            })
+            
+        })
     }
     
 
@@ -63,8 +75,8 @@ class Portfolio extends Component {
             this.state.portfolio[id].stocks.push({
                 stockName: stock.stockName.toUpperCase(),
                 stockAmount: stock.stockAmount,
-                unitValue: unitValue+'EUR',
-                totalValue: totalValue+'EUR',
+                unitValue: unitValue,
+                totalValue: totalValue,
             });
             this.setState({
                 modal: false
