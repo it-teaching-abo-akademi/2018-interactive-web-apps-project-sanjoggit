@@ -37,3 +37,11 @@ table{
 form div{
     margin-bottom: 10px;;
 }
+
+
+/*modal dialog for chart*/
+    @media(min-width: 576px){
+        .modal-dialog{
+            max-width: 70% !important;
+        }
+    }

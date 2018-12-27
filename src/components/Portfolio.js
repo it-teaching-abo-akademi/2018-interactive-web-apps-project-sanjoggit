@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Row, Col, Table } from "reactstrap";
 import AddPortfolio from "./AddPortfolio";
 import AddStock from "./AddStock";
+import PortfolioChart from './PortfolioChart';
 import axios from "axios";
 
 class Portfolio extends Component {
@@ -16,7 +17,7 @@ class Portfolio extends Component {
       USD_EUR: {},
       isEuro: true,
       selectedStocks: [],
-      totalValue: [0]
+      totalValue: [0],
     };
   }
   UNSAFE_componentWillMount() {
@@ -89,6 +90,8 @@ class Portfolio extends Component {
     this.toggle();
   };
 
+  
+
   addStock = id => {
     const stock = {
       stockName: this.state.stockName.toUpperCase(),
@@ -96,7 +99,7 @@ class Portfolio extends Component {
     };
     this.setState({
       stockName: "",
-      stockAmount: ""
+      stockAmount: "",
     });
     axios
       .get(
@@ -109,8 +112,8 @@ class Portfolio extends Component {
         const values = Object.values(data)[0];
         const unitValue = values["1. open"];
         const totalValue = unitValue * stock.stockAmount;
-        // this.state.totalValue.push(totalValue);
-        this.state.portfolio[id].stocks.push({
+        let newStocks = this.state.portfolio[id].stocks
+        newStocks.push({
           stockName: stock.stockName.toUpperCase(),
           stockAmount: stock.stockAmount,
           originalUnitValue: Number.parseFloat(unitValue).toFixed(3),
@@ -118,7 +121,9 @@ class Portfolio extends Component {
           totalValue: Number.parseFloat(totalValue).toFixed(3)+'USD'
         });
         this.setState({
-          modal: false
+          portfolio: [{
+            stocks: newStocks
+          }]
         });
       })
       .catch(e => console.log(e));
@@ -209,24 +214,16 @@ class Portfolio extends Component {
               </tbody>
             ))}
           </Table>
-          {/* <p>total value {this.state.isEuro ? this.state.totalValue.reduce((total, num)=>total+num) + 'USD'
-             : (this.state.totalValue.reduce((total, num)=>total+num))*this.state.USD_EUR + 'EUR'
-             }</p> */}
              <p>Total Value {this.countValue(i)} </p>
           <span className="bottom-controller">
             <AddStock
-              color="primary"
               stockName={this.state.stockName}
               stockAmount={this.state.stockAmount}
               handleChange={this.handleChange}
-              createPortfolio={this.createPortfolio}
-              toggle={this.toggle}
               addStock={this.addStock}
               id={i}
             />
-            <div>
-              <Button color="info">Perf Graph</Button>
-            </div>
+              <PortfolioChart id={i} portfolio={this.state.portfolio} />
             <div>
               <Button color="danger" onClick={()=>this.removeStock(i)}>
                 Remove Selected
