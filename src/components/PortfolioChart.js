@@ -15,7 +15,9 @@ export class PortfolioChart extends Component {
                 labels: [],
                 datasets: []
             },
-            stocks: []
+            stocks: [],
+            startDate: null,
+            endDate: null
         }
       }
 
@@ -44,8 +46,9 @@ export class PortfolioChart extends Component {
                 }))
 
                 let color = '#' + (Math.random().toString(16) + "000000").substring(2,8);
-                let found = this.state.data.datasets.find(el => el.label === item.stockName)
-                    !found && this.state.data.datasets.push({
+                let stockExist = this.state.data.datasets.find(el => el.label === item.stockName);
+                let stockNotExist = !stockExist && this.state.data.datasets
+                    stockNotExist.push({
                     label: item.stockName,
                     data: rate.reverse(),
                     backgroundColor: color,
@@ -53,7 +56,13 @@ export class PortfolioChart extends Component {
                     borderWidth: 2,
                     fill: false,
                     pointRadius: 0
-                })               
+                })
+                
+                this.setState({
+                    data: {
+                        datasets: stockNotExist
+                    }
+                })
                 
 
             })
@@ -62,7 +71,28 @@ export class PortfolioChart extends Component {
         )  
         this.toggle()
       }
+
+      handleChange = (e)=>{
+          this.setState({
+              [e.target.name]: e.target.value
+          })
+      }
+      filterChart = ()=>{
+        let dates = this.state.data.labels;
+        const start = dates.indexOf(this.state.startDate);
+        const end = dates.indexOf(this.state.endDate);
+        
+        let newDates = dates.slice(start, end)
+        this.setState({
+            data: {
+                labels: newDates
+            }
+        })
+        console.log('dates', dates)
+          
+      }
     render() {
+        console.log('**', this.state.data.labels)
         const {id} = this.props;
         const closeBtn = <button className="close" onClick={this.toggle}>&times;</button>;
         return (        
@@ -84,7 +114,10 @@ export class PortfolioChart extends Component {
                             />
                         </ModalBody>
                         <ModalFooter>
-                            footer
+                            Start date <input type="date" name="startDate" onChange={this.handleChange} />
+                            End Date <input type="date" name="endDate" onChange={this.handleChange}/>
+                            <Button color="primary">Filter</Button>{' '}
+                            <Button color="secondary" onClick={this.toggle}>Close</Button>
                         </ModalFooter>                        
                     </Modal>
                 </Col>
