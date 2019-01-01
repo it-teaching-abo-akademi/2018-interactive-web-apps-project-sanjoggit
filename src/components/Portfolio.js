@@ -41,7 +41,6 @@ class Portfolio extends Component {
   }
   
   toggleRate = (item, i) => {
-      console.log('*******', i)
       this.toggleIsEuro(i);    
       if(this.state.isEuro){
           const portfolio = this.state.portfolio[i].stocks.map(item => {
@@ -92,7 +91,7 @@ class Portfolio extends Component {
 
   
 
-  addStock = id => {
+  addStock = (id, toggle) => {
     const stock = {
       stockName: this.state.stockName.toUpperCase(),
       stockAmount: this.state.stockAmount
@@ -112,8 +111,7 @@ class Portfolio extends Component {
         const values = Object.values(data)[0];
         const unitValue = values["1. open"];
         const totalValue = unitValue * stock.stockAmount;
-        let newStocks = this.state.portfolio[id].stocks
-        newStocks.push({
+        this.state.portfolio[id].stocks.push({
           stockName: stock.stockName.toUpperCase(),
           stockAmount: stock.stockAmount,
           originalUnitValue: Number.parseFloat(unitValue).toFixed(3),
@@ -121,10 +119,9 @@ class Portfolio extends Component {
           totalValue: Number.parseFloat(totalValue).toFixed(3)+'USD'
         });
         this.setState({
-          portfolio: [{
-            stocks: newStocks
-          }]
+          modal: false
         });
+        toggle()
       })
       .catch(e => console.log(e));
   };
@@ -217,10 +214,10 @@ class Portfolio extends Component {
              <p>Total Value {this.countValue(i)} </p>
           <span className="bottom-controller">
             <AddStock
-              stockName={this.state.stockName}
-              stockAmount={this.state.stockAmount}
+              stockName= {this.state.stockName}
+              stockAmount= {this.state.stockAmount}
               handleChange={this.handleChange}
-              addStock={this.addStock}
+              addStock = {this.addStock}
               id={i}
             />
               <PortfolioChart id={i} portfolio={this.state.portfolio} />

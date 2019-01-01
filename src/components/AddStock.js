@@ -62,7 +62,7 @@ class AddStock extends Component {
                             </form>
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" onClick={()=>addStock(id)}>Create</Button>{' '}
+                            <Button color="primary" onClick={()=>addStock(id, this.toggle)}>Create</Button>{' '}
                             <Button color="secondary" onClick={this.toggle}>Close</Button>
                         </ModalFooter>
                     </Modal>

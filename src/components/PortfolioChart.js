@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Button, Row, Col,Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import {Line, defaults} from 'react-chartjs-2';
+import {Line} from 'react-chartjs-2';
 import axios from 'axios';
 
-defaults.global.animations = false
 
-
-export class PortfolioChart extends Component {
+class PortfolioChart extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,7 +13,6 @@ export class PortfolioChart extends Component {
                 labels: [],
                 datasets: []
             },
-            stocks: [],
             startDate: null,
             endDate: null
         }
@@ -79,17 +76,17 @@ export class PortfolioChart extends Component {
       }
       filterChart = ()=>{
         let dates = this.state.data.labels;
-        const start = dates.indexOf(this.state.startDate);
-        const end = dates.indexOf(this.state.endDate);
+       
+        // const start = dates.indexOf(this.state.startDate);
+        // const end = dates.indexOf(this.state.endDate);
         
-        let newDates = dates.slice(start, end)
-        this.setState({
-            data: {
-                labels: newDates
-            }
-        })
+        // let newDates = dates.slice(start, end)
+        // this.setState({
+        //     data: {
+        //         labels: newDates
+        //     }
+        // })
         console.log('dates', dates)
-          
       }
     render() {
         console.log('**', this.state.data.labels)
@@ -116,7 +113,7 @@ export class PortfolioChart extends Component {
                         <ModalFooter>
                             Start date <input type="date" name="startDate" onChange={this.handleChange} />
                             End Date <input type="date" name="endDate" onChange={this.handleChange}/>
-                            <Button color="primary">Filter</Button>{' '}
+                            <Button color="primary" onClick={this.filterChart}>Filter</Button>{' '}
                             <Button color="secondary" onClick={this.toggle}>Close</Button>
                         </ModalFooter>                        
                     </Modal>

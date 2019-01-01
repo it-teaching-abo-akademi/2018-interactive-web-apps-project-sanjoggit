@@ -1,5 +1,11 @@
 
-
+.btn{
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  .form-control{
+    box-shadow: none !important;
+  }
 
 .navbar-brand{
     color: white !important;
