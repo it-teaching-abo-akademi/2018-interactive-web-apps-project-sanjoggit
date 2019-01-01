@@ -1,61 +1,59 @@
 
-.btn{
+
+.navbar-brand{
+    color: whitesmoke !important;
+  }
+  .add-portfolio{
+    margin-top: 20px;
+  }
+  
+  .btn{
     outline: none !important;
     box-shadow: none !important;
   }
   .form-control{
     box-shadow: none !important;
   }
-
-.navbar-brand{
-    color: white !important;
-}
-
-.add-btn{
-    margin: 20px 0 20px 0;
-}
-
-.portfolio-name{
-    font-weight: bold;
-}
-
-.portfolio-container{
-    border: 1px solid black;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-.top-controller{
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-}
-.bottom-controller{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-table{
+  
+  .row{
     margin-top: 20px;
-}
-
-form div{
-    margin-bottom: 10px;;
-}
-
-
-/*modal dialog for chart*/
-    @media(min-width: 576px){
-        .modal-dialog{
-            max-width: 70% !important;
-        }
-    }
-
-/*chart input date*/
-
-input[type='date']{
+  }
+  .portfolio-name{
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .portfolio-box{
     border: 1px solid silver;
-    border-radius: 5px;
-    height: 35px;
-}
+    padding: 10px;
+    margin-bottom: 10px;
+    background: whiteSmoke;
+  }
+  .portfolio-header{
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .portfolio-body{
+    margin-top: 15px;
+  }
+  
+  .portfolio-footer{
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+  }
+  
+  /*modal dialog for chart*/
+  @media(min-width: 576px){
+    .modal-size{
+        max-width: 70% !important;
+    }
+  }
+  
+  /*chart input date*/
+  
+  input[type='date']{
+  border: 1px solid silver;
+  border-radius: 5px;
+  height: 35px;
+  }
